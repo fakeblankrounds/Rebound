@@ -86,6 +86,12 @@ public class Unit extends OccupiedSpace implements IClickable{
 		location.Y = y;
 		Render();
 	}
+
+	@Override
+	public void resetUnit() {
+		unit.resetUnit();
+		
+	}
 	
 
 }

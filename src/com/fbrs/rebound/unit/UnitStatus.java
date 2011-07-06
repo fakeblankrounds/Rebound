@@ -21,6 +21,10 @@ public class UnitStatus implements IClickable{
 		//dummy
 	}
 	
+	public void resetUnit() {
+		state = State.Free;
+	}
+	
 	public UnitStatus(String type, Unit callback)
 	{
 		this.type  =type;

@@ -25,6 +25,10 @@ public class Player {
 	public void Unlock()
 	{
 		locked = false;
+		for(OccupiedSpace o : Owned)
+		{
+			o.resetUnit();
+		}
 	}
 	
 	public boolean isLocked()

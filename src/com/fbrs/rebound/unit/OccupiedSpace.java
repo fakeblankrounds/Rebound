@@ -16,5 +16,7 @@ public abstract class OccupiedSpace {
 	public abstract boolean isUnit();
 	
 	public abstract Player getPlayer();
+	
+	public abstract void resetUnit();
 
 }

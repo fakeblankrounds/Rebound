@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.fbrs.utils.math.LPoint;
+import com.fbrs.rebound.UI.IClickable;
 import com.fbrs.rebound.abstraction.TextureLoader;
 import com.fbrs.rebound.player.Player;
 import com.fbrs.rebound.unit.OccupiedSpace;
@@ -27,7 +28,7 @@ public class Map {
 	
 	private int totalturns;
 	private int localPlayer;
-	private Player currentPlayer;
+	private Player currentPlayer = new Player();
 	private int icurrentPlayer;
 	private boolean isLocalPlayersTurn;
 	
@@ -41,7 +42,7 @@ public class Map {
 	
 	public int getRotation()
 	{
-		if(icurrentPlayer == 4)
+		if(icurrentPlayer == 2)
 			return 1;
 		else
 			return icurrentPlayer++;
@@ -56,6 +57,8 @@ public class Map {
 	{
 		map_img = new ArrayList<MapImg>();
 		units = new ArrayList<OccupiedSpace>();
+		//one = new Player();
+		//one = new Player();
 	}
 	
 	public void RenderMap()
@@ -69,19 +72,29 @@ public class Map {
 			u.Render();
 		}
 	
+		TextureLoader.newSprite(512, 64, 0, 416, 0, 2, "commandcenter", new IClickable(){
+
+			@Override
+			public void onClick(int x, int y) {
+				nextPlayer();
+				
+			}
+			
+		});
 	}
 	
 	public static Player getPlayer(int p)
 	{
 		if( p == 1)
 			return one;
-		if(p == 2)
+		else if(p == 2)
 			return two;
-		if(p == 3)
+		else if(p == 3)
 			return three;
-		if(p == 4)
+		else if(p == 4)
 			return four;
-		return null;
+		else
+			return null;
 		
 	}
 	

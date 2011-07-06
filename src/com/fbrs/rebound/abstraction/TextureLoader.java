@@ -15,8 +15,17 @@ public class TextureLoader {
 	{
 		return l.MakeSprite(x, y, rot, z, img, onclick);
 	}
+	public static String newSprite(int resx, int resy, int x, int y, float rot, int z, String img, IClickable onclick)
+	{
+		return l.MakeSprite(resx, resy, x, y, rot, z, img, onclick);
+	}
 	
 	public String MakeSprite(int x, int y, float rot, int z, String img, IClickable onclick)
+	{
+		return null;
+	}
+	
+	public String MakeSprite(int resx, int resy, int x, int y, float rot, int z, String img, IClickable onclick)
 	{
 		return null;
 	}
