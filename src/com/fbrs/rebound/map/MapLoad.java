@@ -82,7 +82,7 @@ public class MapLoad {
 		Player p = Map.getPlayer(Integer.parseInt(subline[2]));
 		Unit u = new Unit(Byte.parseByte(subline[1]), temp.hp_max, temp.atk, temp.def,p , temp.type, new LPoint(x,y));
 		map.units.add(u);
-		p.Owned.add(u);
+		p.Owned.put(line, u);
 		
 	}
 }

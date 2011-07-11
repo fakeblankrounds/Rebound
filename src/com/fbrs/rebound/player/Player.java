@@ -1,7 +1,9 @@
 package com.fbrs.rebound.player;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
+import com.fbrs.rebound.ai.Coordinator;
 import com.fbrs.rebound.unit.OccupiedSpace;
 
 public class Player {
@@ -11,12 +13,16 @@ public class Player {
 	public byte defMod;
 	public byte atkMod;
 	
-	public ArrayList<OccupiedSpace> Owned;
+	public HashMap<String, OccupiedSpace> Owned;
+	
 	
 	public FactionType Faction;
 	
 	private boolean locked;
 	
+	public Coordinator c;
+	
+	//Player Lock Methods
 	public void Lock()
 	{
 		locked = true;
@@ -25,10 +31,12 @@ public class Player {
 	public void Unlock()
 	{
 		locked = false;
-		for(OccupiedSpace o : Owned)
+		Iterator<OccupiedSpace> iter = Owned.values().iterator();
+		while(iter.hasNext())
 		{
-			o.resetUnit();
+			iter.next().resetUnit();
 		}
+		c.go();
 	}
 	
 	public boolean isLocked()
@@ -36,11 +44,13 @@ public class Player {
 		return locked;
 	}
 	
+	
 	public Player()
 	{
 		supply = 0;
-		Owned = new ArrayList<OccupiedSpace>();
+		Owned = new HashMap<String, OccupiedSpace>();
 		Faction = new Banes();
+		 c = new Coordinator(this);
 	}
 
 }

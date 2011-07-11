@@ -14,7 +14,7 @@ public class Unit extends OccupiedSpace implements IClickable{
 	public byte def;
 	private Player owner;
 	private String sprite = "";
-	private LPoint location;
+	public LPoint location;
 	public String type;
 	private UnitStatus unit;
 	
