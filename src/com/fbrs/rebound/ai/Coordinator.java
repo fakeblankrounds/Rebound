@@ -14,6 +14,16 @@ public class Coordinator {
 	{
 		player = p;
 	}
+	
+	public Coordinator()
+	{
+	
+	}
+	
+	public void setPlayer(Player p)
+	{
+		player = p;
+	}
 
 	public void go()
 	{
@@ -23,7 +33,7 @@ public class Coordinator {
 	public Unit SelectUnit()
 	{
 		if(player.Owned.size() > 0)
-			return (Unit) player.Owned.get(1);
+			return (Unit) player.Owned.values().iterator().next();
 		else
 			return null;
 	}

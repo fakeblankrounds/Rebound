@@ -5,7 +5,9 @@ import java.util.HashMap;
 
 import com.fbrs.utils.math.LPoint;
 import com.fbrs.rebound.UI.IClickable;
+import com.fbrs.rebound.abstraction.AnimationFactory;
 import com.fbrs.rebound.abstraction.TextureLoader;
+import com.fbrs.rebound.abstraction.AnimationFactory.AnimationType;
 import com.fbrs.rebound.player.Player;
 import com.fbrs.rebound.unit.OccupiedSpace;
 import com.fbrs.rebound.unit.Unit;
@@ -26,11 +28,17 @@ public class Map {
 	public int atkMod;
 	public int defMod;
 	
-	private int totalturns;
+	private int drawOffsetX = 0;
+	private int drawOffsetY = 0;
+	private float scale = 1;
+	
+	private int totalturns = 0;
 	private int localPlayer;
 	private Player currentPlayer = new Player();
 	private int icurrentPlayer;
 	private boolean isLocalPlayersTurn;
+	
+	private IClickable mapclick = null;
 	
 	public void StartTurn(int player)
 	{
@@ -40,17 +48,27 @@ public class Map {
 		currentPlayer.Unlock();	
 	}
 	
+	public void addDrawOffset(int x, int y)
+	{
+		drawOffsetX = x;
+		drawOffsetY = y;
+	}
+	
 	public int getRotation()
 	{
 		if(icurrentPlayer == 2)
 			return 1;
 		else
-			return icurrentPlayer++;
+		{	
+			icurrentPlayer++;
+			return icurrentPlayer;
+		}
 	}
 	
 	public void nextPlayer()
 	{
 		StartTurn(getRotation());
+		AnimationFactory.StartNewAnimation("p"+icurrentPlayer+"start", new LPoint(256, 128) ,new LPoint(272, 0), new LPoint(272, 176), 10, AnimationType.linear, false, 10);
 	}
 	
 	public Map()
@@ -61,18 +79,28 @@ public class Map {
 		//one = new Player();
 	}
 	
+	public void setMapScale(float scale)
+	{
+		this.scale = scale;
+	}
+	
+	public void addMapClick(IClickable clicker)
+	{
+		mapclick = clicker;
+	}
+	
 	public void RenderMap()
 	{
 		for(MapImg img : map_img)
 		{
-			TextureLoader.newSprite((int)img.point.X*128, (int)img.point.Y*128, img.rot, 1, img.img, null);
+			TextureLoader.newSprite((int)((img.point.X*128) * scale) + drawOffsetX, (int)((img.point.Y*128) * scale )+ drawOffsetY, img.rot, scale, 1, img.img, mapclick);
 		}
 		for(OccupiedSpace u : units)
 		{
 			u.Render();
 		}
 	
-		TextureLoader.newSprite(512, 64, 0, 416, 0, 2, "commandcenter", new IClickable(){
+		/*TextureLoader.newSprite(512, 64, 0, 416, 0, 2, "commandcenter", new IClickable(){
 
 			@Override
 			public void onClick(int x, int y) {
@@ -80,7 +108,7 @@ public class Map {
 				
 			}
 			
-		});
+		}); */
 	}
 	
 	public static Player getPlayer(int p)

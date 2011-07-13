@@ -4,17 +4,21 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import com.fbrs.rebound.ai.Coordinator;
+import com.fbrs.rebound.map.Map;
+import com.fbrs.rebound.map.MapLoad;
 import com.fbrs.rebound.unit.OccupiedSpace;
+import com.fbrs.rebound.unit.Unit;
+import com.fbrs.rebound.unit.UnitsLookup;
+import com.fbrs.utils.math.LPoint;
 
 public class Player {
 	
 	public int supply;
 	
-	public byte defMod;
-	public byte atkMod;
+	public byte defMod = 0;
+	public byte atkMod = 0;
 	
 	public HashMap<String, OccupiedSpace> Owned;
-	
 	
 	public FactionType Faction;
 	
@@ -36,12 +40,21 @@ public class Player {
 		{
 			iter.next().resetUnit();
 		}
-		c.go();
+		if(c!=null)
+			c.go();
 	}
 	
 	public boolean isLocked()
 	{
 		return locked;
+	}
+	
+	public void SpawnNewUnit(String Type, LPoint loc)
+	{
+		Unit temp = UnitsLookup.Find(Type);
+		Unit u = new Unit(temp.hp_max, temp.hp_max, temp.atk, temp.def, temp.supply, this , temp.type, loc);
+		this.Owned.put("Type" + (Owned.size()+1), u);
+		MapLoad.map.units.add(u);
 	}
 	
 	
@@ -51,6 +64,14 @@ public class Player {
 		Owned = new HashMap<String, OccupiedSpace>();
 		Faction = new Banes();
 		 c = new Coordinator(this);
+	}
+	
+	public Player(Coordinator coord)
+	{
+		supply = 0;
+		Owned = new HashMap<String, OccupiedSpace>();
+		Faction = new Banes();
+		 c = coord;
 	}
 
 }

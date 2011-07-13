@@ -19,17 +19,17 @@ import com.fbrs.utils.math.LPoint;
  * @author Nick
  *
  */
-public class MapLoad {
+public class MapMaker {
 	
-	public static Map map;
-	public static void SetPlayers(FactionType one, FactionType two)
+	public  Map map;
+	public  void SetPlayers(FactionType one, FactionType two)
 	{
 		map.one = new Player(null);
 		map.two = new Player(new Coordinator());
 		map.two.c.setPlayer(map.two);
 	}
 	
-	public static void ParseFile(InputStream Path)
+	public  void ParseFile(InputStream Path)
 	{
 		map = new Map();
 		SetPlayers(null,null);
@@ -56,7 +56,7 @@ public class MapLoad {
 			
 		}
 	}
-	public static void ParseFile(InputStream Path, IClickable click)
+	public  void ParseFile(InputStream Path, IClickable click)
 	{
 		map = new Map();
 		map.addMapClick(click);
@@ -87,7 +87,7 @@ public class MapLoad {
 	
 	//sample line
 	//X,Y,int,unit-unithealth-unitowner
-	private static void ParseLine(String line)
+	private  void ParseLine(String line)
 	{
 		String[] subline = line.split(",");
 		int x = Integer.parseInt(subline[0]);
@@ -103,7 +103,7 @@ public class MapLoad {
 	}
 
 	
-	private static void ParseUnit(String line, int x, int y)
+	private  void ParseUnit(String line, int x, int y)
 	{
 		if(line == "")
 			return;

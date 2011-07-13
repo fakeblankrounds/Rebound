@@ -17,8 +17,9 @@ public class Unit extends OccupiedSpace implements IClickable{
 	public LPoint location;
 	public String type;
 	private UnitStatus unit;
+	public byte supply;
 	
-	public Unit(byte h, byte hm, byte a, byte d, Player o, String t, LPoint l)
+	public Unit(byte h, byte hm, byte a, byte d, byte s, Player o, String t, LPoint l)
 	{
 		hp = h;
 		hp_max = hm;
@@ -27,6 +28,7 @@ public class Unit extends OccupiedSpace implements IClickable{
 		owner = o;
 		type = t;
 		location = l;
+		supply = s;
 	
 	}
 	
